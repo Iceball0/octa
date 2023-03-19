@@ -41,8 +41,7 @@ export default function App() {
                 <Route to="/" element={<Layout />}>
                     {/* public routes */}
                     <Route index element={<Main type="Main" />} />
-                    <Route path="login" element={<Login />} />
-                    <Route path="signup" element={<Signup />} />
+                    <Route path="login" element={<Signup />} />
                     <Route path="watch" element={<MainPlayer />} />
 
                     {/* protected routes */}

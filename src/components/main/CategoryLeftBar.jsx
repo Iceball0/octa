@@ -17,12 +17,12 @@ const CategoryLeftBar = () => {
             { token ? 
                 <>
                 <CategoryItem category_item_text='Главная' link="/" src={mainImg} active={true} />
-                <CategoryItem category_item_text='Подписки' link="subscribes" src={subscribeImg} nameCategoryItem={"category-item__borger"} active={false} />
+                <CategoryItem category_item_text='Подписки' link="/subscribes" src={subscribeImg} nameCategoryItem={"category-item__borger"} active={false} />
                 <CategoryItem category_item_text='Библиотека' link="/" src={libraryImg} active={false} />
                 <CategoryItem category_item_text='История' link="/" src={historyImg} active={false} />
-                <CategoryItem category_item_text='Ваши видео' link="own_video" src={myVideoImg} active={false} />
+                <CategoryItem category_item_text='Ваши видео' link="/own_video" src={myVideoImg} active={false} />
                 <CategoryItem category_item_text='Смотреть позже' link="/" src={viewNextImg} active={false} />
-                <CategoryItem category_item_text='Понравившиеся' link="favourite" src={likesImg} nameCategoryItem={"category-item__borger"} active={false} />
+                <CategoryItem category_item_text='Понравившиеся' link="/favourite" src={likesImg} nameCategoryItem={"category-item__borger"} active={false} />
                 </>
                 : <CategoryItem category_item_text='Главная' src={mainImg} nameCategoryItem={"category-item__borger"} active={true} /> }
         </div>
