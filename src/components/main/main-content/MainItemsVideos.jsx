@@ -5,14 +5,14 @@ import videoPosterImg from '../../../assets/img/main/poster.jpg';
 
 import { useVideosMutation } from '../../../store/videosApiSlice';
 
-const MainItemsVideos = () => {
+const MainItemsVideos = ({ type }) => {
 
     const [videos, { isLoading }] = useVideosMutation();
     const [videosList, setVideosList] = useState([]);
 
     useEffect(() => {
         const getVideos = async () => {
-            const resp = await videos();
+            const resp = await videos({ type: type });
             let result = [];
 
             resp.data.videos.forEach(video => {

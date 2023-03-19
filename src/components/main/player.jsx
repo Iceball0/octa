@@ -8,7 +8,7 @@ import fullScreenImg from '../../assets/img/main/player/full-screen.svg'
 import normalScreenImg from '../../assets/img/main/player/normal-screen.svg'
 
 
-const Player = ({ srcVideo, ...props }) => {
+const Player = ({ srcVideo, toggleWideScreen, ...props }) => {
     
     const videoRef = useRef(null);
     const videoBlockRef = useRef(null);
@@ -23,6 +23,9 @@ const Player = ({ srcVideo, ...props }) => {
     const [volumeValue, setVolumeValue] = useState(50);
     const [progressValue, setProgressValue] = useState(0);
     const [progressMax, setProgressMax] = useState(0);
+
+    const [anim1, setAnim1] = useState(false);
+    const [anim2, setAnim2] = useState(false);
 
     const playVideo = () => {
 
@@ -40,11 +43,23 @@ const Player = ({ srcVideo, ...props }) => {
     }
 
     const changeProgressBar = (val) => {
+        let type;
+        if (progressValue > val) type = 1;
+        else type = 2
+
         if (val < 0) val = 0;
         if (val > progressMax) val = progressMax;
+
+        if (type === 1) setAnim1(true);
+        else setAnim2(true)
                 
         setProgressValue(val);
         videoRef.current.currentTime = val;
+
+        setTimeout(() => {
+            if (type === 1) setAnim1(false);
+            else setAnim2(false)
+        }, 500)
     }
 
     const changeVolume = (val) => {
@@ -160,6 +175,27 @@ const Player = ({ srcVideo, ...props }) => {
         return `${min}:${sec}`;
     }
 
+    var counter1 = 0;
+    var counter2 = 0
+
+    const prevDouble = (e) => {
+        counter1 += 1;
+            
+        setTimeout(() => {
+            if (counter1 > 1) changeProgressBar(progressValue - 10);
+            counter1 = 0;
+        }, 200);
+    }
+
+    const nextDouble = (e) => {
+        counter2 += 1;
+            
+        setTimeout(() => {
+            if (counter2 > 1) changeProgressBar(progressValue + 10);
+            counter2 = 0;
+        }, 200);
+    }
+
     return (
         <div className="player" ref={videoBlockRef}>
             <video className="player__video" {...props}  
@@ -182,12 +218,12 @@ const Player = ({ srcVideo, ...props }) => {
             >
                 <source src={srcVideo} type="video/mp4" />
             </video>
-            <div className="player__next-tap">
+            <div className={`player__next-tap active`} onClick={prevDouble}>
                 <svg width="85" height="85" viewBox="0 0 85 85" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M51.3911 27.6677L69.611 15.2378C73.1375 12.832 77.9189 15.3586 77.9189 19.6261V65.512C77.9189 69.7821 73.1383 72.3102 69.6111 69.9038L35.9758 46.9609C32.8838 44.8517 32.8838 40.2882 35.9758 38.1843L47.8494 30.084L47.8494 19.6308C47.8494 18.2068 46.2559 17.3653 45.0799 18.1677L11.4916 41.1064C10.459 41.8126 10.459 43.3295 11.4907 44.0332L45.0792 66.972C46.2559 67.7749 47.8494 66.9334 47.8494 65.5095V63.8449C47.8494 62.8669 48.6423 62.0741 49.6203 62.0741C50.5983 62.0741 51.3911 62.8669 51.3911 63.8449V65.5095C51.3911 69.7798 46.6104 72.3041 43.0825 69.8973L9.49409 46.9584C6.40257 44.8495 6.40256 40.296 9.49338 38.1824L43.0833 15.2424C46.6104 12.8361 51.3911 15.3604 51.3911 19.6308L51.3911 27.6677ZM51.3911 31.955L71.6069 18.1636C72.7824 17.3616 74.3773 18.2043 74.3773 19.6261V65.512C74.3773 66.937 72.7827 67.7803 71.6069 66.9781L37.9716 44.0351C36.9413 43.3323 36.9413 41.8111 37.97 41.1113L47.8494 34.3712V40.8737C47.8494 41.8517 48.6423 42.6445 49.6203 42.6445C50.5983 42.6445 51.3911 41.8517 51.3911 40.8737V31.955Z" fill="#B570EB" />
                 </svg>
             </div>
-            <div className="player__prev-tap">
+            <div className={`player__prev-tap active`} onClick={nextDouble}>
                 <svg width="85" height="85" viewBox="0 0 85 85" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M33.6089 57.3323L15.389 69.7622C11.8625 72.168 7.08105 69.6414 7.08105 65.3739V19.488C7.08105 15.2179 11.8617 12.6898 15.3889 15.0962L49.0242 38.0391C52.1162 40.1483 52.1162 44.7118 49.0242 46.8157L37.1506 54.916V65.3692C37.1506 66.7932 38.7441 67.6347 39.9201 66.8323L73.5084 43.8936C74.541 43.1874 74.541 41.6705 73.5093 40.9668L39.9208 18.028C38.7441 17.2251 37.1506 18.0666 37.1506 19.4905V21.1551C37.1506 22.1331 36.3577 22.9259 35.3797 22.9259C34.4017 22.9259 33.6089 22.1331 33.6089 21.1551V19.4905C33.6089 15.2202 38.3896 12.6959 41.9175 15.1027L75.5059 38.0416C78.5974 40.1505 78.5974 44.704 75.5066 46.8176L41.9167 69.7576C38.3896 72.1639 33.6089 69.6396 33.6089 65.3692V57.3323ZM33.6089 53.045L13.3931 66.8364C12.2176 67.6384 10.6227 66.7957 10.6227 65.3739V19.488C10.6227 18.063 12.2173 17.2197 13.3931 18.0219L47.0284 40.9649C48.0587 41.6677 48.0587 43.1889 47.03 43.8887L37.1506 50.6288V44.1263C37.1506 43.1483 36.3577 42.3555 35.3797 42.3555C34.4017 42.3555 33.6089 43.1483 33.6089 44.1263V53.045Z" fill="#B570EB" />
                 </svg>
@@ -238,10 +274,10 @@ const Player = ({ srcVideo, ...props }) => {
                         <div className="player-overlay__settings-btn">
                             <img src={settingImg} alt="" className="player-overlay__settings-img" />
                         </div>
-                        <button className="player-overlay__big-width-btn">
+                        <button className="player-overlay__big-width-btn" onClick={toggleWideScreen}>
                             <img src={bigWidthImg} alt="" className="player-overlay__big-width-img" />
                         </button>
-                        <button className="player-overlay__full-screen-btn" onClick={toggleFullScreen}>
+                        <button className={`player-overlay__full-screen-btn ${isFullSized ? 'active' : ''}`} onClick={toggleFullScreen}>
                             <img src={fullScreenImg} alt="" className="player-overlay__full-screen-img-1" />
                             <img src={normalScreenImg} alt="" className="player-overlay__full-screen-img-2" />
                         </button>

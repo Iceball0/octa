@@ -5,7 +5,8 @@ export const videosApiSlice = apiSlice.injectEndpoints({
         videos: builder.mutation({
             query: credentials => ({
                 url: '/videos',
-                method: 'GET'
+                method: 'POST',
+                body: { ...credentials }
             })
         }),
     })

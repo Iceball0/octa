@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import CarouselSection from '../main/carousel-section';
 
 import Player from './player';
 import Description from './Description';
@@ -24,6 +25,12 @@ const VideoSection = () => {
     const [date, setDate] = useState('');
     const [videoSrc, setVideoSrc] = useState('');
 
+    const [isWideScreen, setIsWideSceen] = useState(false);
+
+    const toggleWideScreen = () => {
+        setIsWideSceen(!isWideScreen);
+    }
+
     useEffect(() => {
         const getVideo = async () => {
             const id = searchParams.get("id");
@@ -47,26 +54,30 @@ const VideoSection = () => {
     return (
         isLoading
             ? <h1>Loading...</h1>
-            : <div className="video-section">
-                <React.Fragment key={videoSrc}>
-                    <Player srcVideo={videoSrc} />
-                    <Description video={{
-                        id: id,
-                        liked: liked,
-                        likes: likes,
-                        videoPoster: videoPosterImg,
-                        srcVideo: videoSrc,
-                        srcAvatar: avatarImg,
-                        title: title,
-                        description: description,
-                        channelId: channelId,
-                        nameUser: author,
-                        subscribes: subscribes,
-                        subscribed: subscribed,
-                        createdAt: date
-                    }} />
-                </React.Fragment>
-            </div>
+            : <> 
+                <div className="video-section">
+                    <React.Fragment key={videoSrc}>
+                        <Player srcVideo={videoSrc} toggleWideScreen={toggleWideScreen} />
+                        <Description video={{
+                            id: id,
+                            liked: liked,
+                            likes: likes,
+                            videoPoster: videoPosterImg,
+                            srcVideo: videoSrc,
+                            srcAvatar: avatarImg,
+                            title: title,
+                            description: description,
+                            channelId: channelId,
+                            nameUser: author,
+                            subscribes: subscribes,
+                            subscribed: subscribed,
+                            createdAt: date
+                        }} />
+                    </React.Fragment>
+                </div>
+                {isWideScreen ? '' : <CarouselSection  />}
+            </>
+            
     );
 }
 

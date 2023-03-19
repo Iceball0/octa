@@ -5,6 +5,7 @@ import './assets/css/style.css';
 
 import Layout from './components/Layout';
 import Main from './components/Main';
+
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Signup from './components/Signup';
@@ -39,16 +40,16 @@ export default function App() {
             : <Routes>
                 <Route to="/" element={<Layout />}>
                     {/* public routes */}
-                    <Route index element={<Main />} />
+                    <Route index element={<Main type="Main" />} />
                     <Route path="login" element={<Login />} />
                     <Route path="signup" element={<Signup />} />
                     <Route path="watch" element={<MainPlayer />} />
 
                     {/* protected routes */}
                     <Route element={<RequireAuth />}>
-                        <Route path="subscribes" element={<Login />} />
-                        <Route path="login" element={<Login />} />
-                        <Route path="login" element={<Login />} />
+                        <Route path="subscribes" element={<Main type="Subscribes" />} />
+                        <Route path="favourite" element={<Main type="Favourite" />} />
+                        <Route path="own_video" element={<Main type="OwnVideo" />} />
                         <Route path="upload" element={<Upload />} />
                         <Route path="profile" element={<Profile />} />
                         <Route path="logout" element={<Logout />} />

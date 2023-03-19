@@ -4,14 +4,14 @@ import MainContent from './MainContent';
 import BackgroundLiveImg from './BackgroundLiveImg';
 import videosrc from '../assets/video/back.mp4'; 
 
-const Main = () => {
+const Main = ({ type }) => {
     return (
         <> 
             <div className='main'>
                 <div className="_container">
                     <div className="main-wrapper">
                         <LeftNavBar />
-                        <MainContent />
+                        <MainContent type={type} />
                     </div>
                 </div>
             </div>

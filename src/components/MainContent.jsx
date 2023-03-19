@@ -2,11 +2,11 @@ import React from 'react';
 import MainBannerVideo from './main/main-content/MainBannerVideo';
 import MainItemsVideos from './main/main-content/MainItemsVideos';
 
-const MainContent = () => {
+const MainContent = ({ type }) => {
     return (
         <div className='main-content'>
-            <MainBannerVideo autoPlay="autoplay" muted />
-            <MainItemsVideos />
+            {type === "Main" ? <MainBannerVideo autoPlay="autoplay" muted /> : '' }
+            <MainItemsVideos type={type} />
         </div>
     );
 }
