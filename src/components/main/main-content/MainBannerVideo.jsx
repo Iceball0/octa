@@ -1,9 +1,8 @@
-import BannerVideo from '../../../assets/video/back.mp4';
 
 const MainBannerVideo = (props) => {
     return (
         <div className='main-banner-Video'>
-            <video src={BannerVideo} {...props}></video>
+            <video src={process.env.REACT_APP_BASEURL + '/video/back.mp4'} {...props}></video>
         </div>
     );
 }
