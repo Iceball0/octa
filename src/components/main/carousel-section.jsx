@@ -20,7 +20,7 @@ const CarouselSection = () => {
             let result = [];
 
             resp.data.videos.forEach(video => {
-                if ( id != video.id )
+                if ( parseInt(id) !== video.id )
                     result.push({
                         id: video.id,
                         videoPoster: videoPosterImg,

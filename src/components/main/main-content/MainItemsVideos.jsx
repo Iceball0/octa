@@ -31,7 +31,7 @@ const MainItemsVideos = ({ type }) => {
             
         }
         getVideos();
-    }, [videos])
+    }, [videos, type])
 
 
     return (

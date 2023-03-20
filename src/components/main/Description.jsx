@@ -22,7 +22,7 @@ const Description = (props) => {
 
         setVideoSubed(props.video.subscribed);
         setSubsAmount(props.video.subscribes);
-    }, [])
+    }, [props.video.liked, props.video.likes, props.video.subscribed, props.video.subscribes])
 
     const toggleLikes = async () => {
         if (videoLiked) setLikesAmount(likesAmount - 1);

@@ -6,7 +6,6 @@ import './assets/css/style.css';
 import Layout from './components/Layout';
 import Main from './components/Main';
 
-import Login from './components/Login';
 import Logout from './components/Logout';
 import Signup from './components/Signup';
 
